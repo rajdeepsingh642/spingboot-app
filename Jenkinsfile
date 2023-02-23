@@ -36,22 +36,32 @@ pipeline{
         }
                     
          
-        stage('Docker build and push'){
+        stage('Docker build'){
             steps{
                 script{
                     sh 'docker build -t rajdeepsingh642/springboad:$BUILD_ID .'
-                   withCredentials([string(credentialsId: 'dockerhub', variable: 'docker-hub')]) {
+                  
+                }
+            }
+        }
+        
+        stage('Docker push') {
+             steps{
+                script{
+                     withCredentials([string(credentialsId: 'dockerhub', variable: 'docker-hub')]) {
     
 
                       sh "docker login -u rajdeepsingh642 -p ${docker-hub}"
+                     }
                       sh  'docker push rajdeepsingh642/springboad:$BUILD_ID'
                        
 
                       
                        }
-                }
-            }
-        }        
+                
+             }
+          }
+                
         stage('Identifying using datree in using helm charts'){
             steps{
                 scrips{
