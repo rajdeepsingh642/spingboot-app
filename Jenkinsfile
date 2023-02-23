@@ -48,13 +48,15 @@ pipeline{
                        
         }
 
-        stage('Docker build$ push'){
+        stage('Docker build and push'){
             steps{
                 script{
                     sh 'docker build -t rajdeepsingh642/springboad:$BUILD_ID .'
-                   withCredentials([string(credentialsId: 'rajdeepsingh642', variable: 'docker-hub')]) {
+                   withCredentials([string(credentialsId: 'dockerhub', variable: 'docker-hub')]) {
+    
+
                       sh "docker login -u rajdeepsingh642 -p ${docker-hub}"
-                      sh  'docker push rajdeepsingh642/springapp:$BUILD_ID'
+                      sh  'docker push rajdeepsingh642/springboad:$BUILD_ID'
                        
 
                       
