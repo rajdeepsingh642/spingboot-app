@@ -61,7 +61,17 @@ pipeline{
                 
              }
           }
-      
+        stage('Identifying using datree in using helm charts'){
+            steps{
+                script{
+                    dir(' kubernetes/myapp ') {
+                       withEnv(['DATREE_TOKEN=5644d4f3-5357-4ad4-97c5-f42e0459c250']) {
+                         sh 'helm datree test .'
+ }
+                }
+            }
+        }
+    }
 }  
 
 }
