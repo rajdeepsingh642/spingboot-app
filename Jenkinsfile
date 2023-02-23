@@ -35,19 +35,7 @@ pipeline{
                        
         }
                     
-         stage('Quality Gate Status'){
-                
-                steps{
-                    
-                    script{
-                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-qube'       
-                   
-                        
-                    }     
-        }          
-                       
-        }
-
+         
         stage('Docker build and push'){
             steps{
                 script{
