@@ -52,7 +52,7 @@ pipeline{
             steps{
                 script{
                    withCredentials([string(credentialsId: 'rajdeepsingh642', variable: 'docker-hub')]) {
-    // some block
+    
 
                       sh '''
                        docker build -t rajdeepsingh642/springboad:$BUILD_ID .
