@@ -1,0 +1,44 @@
+ stage('Sonar Quality check'){
+         agent {
+                docker { 
+                   image  'maven'
+            }
+            }
+            steps{
+                script{
+                
+                withSonarQubeEnv(credentialsId: 'sonar-qube') {
+                   sh "mvn clean install sonar:sonar"
+                    }
+              }
+            }
+              
+                       
+        }
+                    
+         
+        stage('Docker build'){
+            steps{
+                script{
+                    sh 'docker build -t rajdeepsingh642/springboad:$BUILD_ID .'
+                  
+                }
+            }
+        }
+        
+        stage('Docker push') {
+             steps{
+                script{
+                     withCredentials([string(credentialsId: 'dockerhub', variable: 'docker_id')]) {
+
+
+                      sh "docker login -u rajdeepsingh642 -p ${docker_id}"
+                     }
+                      sh  'docker push rajdeepsingh642/springboad:$BUILD_ID'
+                       
+
+                      
+                       }
+                
+             }
+          }
