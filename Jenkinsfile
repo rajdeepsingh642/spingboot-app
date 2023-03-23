@@ -26,14 +26,21 @@ pipeline{
 
          stage('sonar scaner'){
             steps{
-                withCredentials([string(credentialsId: 'sonar_qube', variable: 'sonar_qube')]) {
-                     sh "mvn clean install sonar:sonar"
-}
+                withSonarQubeEnv(credentialsId: 'sonar_qube') {
+
+ 
+                     sh "mvn clean i'nstall sonar:sonar"
+                }
             }
          }
 
 
+       stage('build image and push'){
+            steps{
+                sh 'docker build -t rajdeepsingh642/springboot:$BUILD_ID .'
 
+            }
+       }
 
 
 
