@@ -17,25 +17,20 @@ pipeline{
                     
                     
                 }
-        }
-         stage('maven'){
-            steps{
-                sh 'mvn install package'
             }
-         }
-
-         stage('sonar scaner'){
+        
+        stage('sonar scaner'){
             steps{
                 withSonarQubeEnv(credentialsId: 'sonar_qube') {
 
  
-                     sh "mvn clean i'nstall sonar:sonar"
+                     sh "mvn clean install sonar:sonar"
                 }
             }
          }
 
 
-       stage('build image and push'){
+         stage('build image and push'){
             steps{
                 sh 'docker build -t rajdeepsingh642/springboot:$BUILD_ID .'
 
