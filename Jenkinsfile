@@ -32,14 +32,23 @@ pipeline{
          }
 
 
-         stage('build image and push'){
-            steps{
-                sh 'docker build -t rajdeepsingh642/springboot:$BUILD_ID .'
+         stage('build image'){
+            steps{'
+                sh 'docker build -t 192.168.1.76:8083/springboot:$BUILD_ID .'
 
             }
        }
-
-
+        stage('push to nexus'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus-token', variable: 'nexus_token')]) {
+                   sh "docker login -u admin -p $nexus_token 192.168.1.76:8083"
+                   sh "docker push 192.168.1.76:8083/springboot:$BUILD_ID"
+}
+                }
+            }
+        }
+          
 
     }
 }  
