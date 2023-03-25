@@ -46,7 +46,7 @@ pipeline{
                    withCredentials([string(credentialsId: 'nexus-token', variable: 'nexus_creds')]) {
                     
                       echo "Packing helm chart"
-                      sh "helm package -d ${WORKSPACE}/kubernetes ${WORKSPACE}/kubernetes/myapp"
+                      sh "helm package -d ${WORKSPACE}/helm ${WORKSPACE}/kubernetes/myapp"
           
                         sh "curl -u admin:${nexus_creds} http://192.168.1.226:8081/repository/helm-repo/ --upload-file ${WORKSPACE}/kubernetes/myapp.tgz -v"
     } 
