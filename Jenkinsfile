@@ -19,18 +19,7 @@ pipeline{
                 }
             }
         
-        stage('sonar scaner'){
-            steps{
-                script{
-                withSonarQubeEnv(credentialsId: 'sonar_qube'){
-
- 
-                     sh "mvn clean install sonar:sonar"
-                }
-                }
-            }
-         }
-
+        
 
          stage('build image'){
             steps{
