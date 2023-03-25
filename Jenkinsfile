@@ -33,7 +33,7 @@ pipeline{
 
 
          stage('build image'){
-            steps{'
+            steps{
                 sh 'docker build -t 192.168.1.226:8083/springboot:$BUILD_ID .'
 
             }
