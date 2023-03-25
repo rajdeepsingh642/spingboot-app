@@ -45,7 +45,7 @@ pipeline{
                script{
                    withCredentials([string(credentialsId: 'nexus-token', variable: 'nexus_creds')]) {
                      dir(' kubernetes/myapp ') {
-                       sh "curl -u admin:${nexus_creds}  http://192.168.1.223:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v"
+                       sh "curl -u admin:${nexus_creds}  http://192.168.1.226:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v"
                      }  
 
                    }
