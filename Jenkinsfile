@@ -34,23 +34,44 @@ pipeline{
 
          stage('build image'){
             steps{'
-                sh 'docker build -t 192.168.1.76:8083/springboot:$BUILD_ID .'
+                sh 'docker build -t 192.168.1.226:8083/springboot:$BUILD_ID .'
 
             }
        }
+
         stage('push to nexus'){
             steps{
                 script{
                     withCredentials([string(credentialsId: 'nexus-token', variable: 'nexus_token')]) {
-                   sh "docker login -u admin -p $nexus_token 192.168.1.76:8083"
-                   sh "docker push 192.168.1.76:8083/springboot:$BUILD_ID"
+                   sh "docker login -u admin -p $nexus_token 192.168.1.226:8083"
+                   sh "docker push 192.168.1.226:8083/springboot:$BUILD_ID"
 }
                 }
             }
         }
-          
+        stage('check datree'){
+          steps{
+            script{
+              dir(' kubernetes/myapp') {
+                   sh 'helm datree test .' 
+}
 
-    }
+            }
+          }
+        }
+        stage('pushin helm chart to nexus'){
+           steps{
+               script{
+                   withCredentials([string(credentialsId: 'nexus-token', variable: 'nexus_creds')]) {
+                     dir(' kubernetes/myapp ') {
+                       sh "curl -u admin:${nexus_creds}  http://192.168.1.223:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz -v"
+                     }  
+
+                   }
+               }
+           }
+        }
+    }   
 }  
 
 
