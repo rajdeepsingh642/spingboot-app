@@ -34,7 +34,7 @@ pipeline{
                     withCredentials([string(credentialsId: 'nexus-token', variable: 'nexus_token')]) {
                    sh "docker login -u admin -p $nexus_token 192.168.1.226:8083"
                    sh "docker push 192.168.1.226:8083/springboot:$BUILD_ID"
-                   sh "docker push 192.168.1.226:8083/springboot:latest"
+                 
                     }
                 }
             }
