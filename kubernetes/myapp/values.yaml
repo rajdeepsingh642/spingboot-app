@@ -8,7 +8,7 @@ image:
   repository: 192.168.1.226:8083/springboot
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: IMAGE_TAG
+  tag: latest
 
 service:
   type: NodePort
