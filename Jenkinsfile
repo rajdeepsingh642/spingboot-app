@@ -48,7 +48,7 @@ pipeline{
                       echo "Packing helm chart"
                       sh "helm package -d ${WORKSPACE}/kubernetes ${WORKSPACE}/kubernetes/myapp"
           
-                        sh "curl -u admin:${nexus_creds} http://192.168.1.226:8081/repository/helm-repo/ --upload-file ${WORKSPACE}/kubernetes/myapp-1.tgz -v
+                        sh "curl -u admin:${nexus_creds} http://192.168.1.226:8081/repository/helm-repo/ --upload-file ${WORKSPACE}/kubernetes/myapp-1.tgz -v"
     } 
                }
            }
